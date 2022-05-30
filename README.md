@@ -1,2 +1,6 @@
 # Jack---Flippy-byte-and-Tic-Tac-Toe
-a nand2tetris program consisting of  .jack files
+
+## Flippy Bite and Tic Tac Toe using Jack programming 
+
+            - nand2 tetris project
+
