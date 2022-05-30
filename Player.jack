@@ -1,0 +1,67 @@
+class Player{
+  field int x, y, score;
+
+  /*Creates a new Player and initialize it at (x,y),
+  * the top left corner of the sprite */
+  
+  
+  constructor Player new(int a, int b){
+    let x = a;                                           // just initializing x with a
+    let y = b;                                            // just initializing y with b
+    let score = 0;                                        // at start score is 0
+
+    return this;
+  }
+
+  /*Update player location by  'y' pixels vertically */
+  
+  
+  method void movePlayer(int yChange){
+    let y = y - yChange;                                      // we are changing only y because player doesnt move front or back
+    return;
+  }
+
+  /*Draws the player and their score on the screen*/
+  
+  method void drawPlayer(){
+                                                       //The x and y coordinates represent the center of the character
+    if((y+15) > 255){
+      let y = 240;                                     // just a screen location where to draw the rectangle
+    }
+    if((y-15) < 0){
+      let y = 15;                                       // just a screen location where to draw the rectangle
+    }
+    do Screen.drawRectangle((x-15),(y-15),(x+15),(y+15));     // draws a rectangle which we consider as player
+
+    //Draw score
+    do Output.moveCursor(0,0);                         // moves the cursor to the given location
+    do Output.printInt(score);                         // prints the score obtained
+    return;
+  }
+
+  /*Increments the player's score by a specified amount.*/
+  
+  method void incrementScore(int amount){
+    let score = score + amount;                        
+    return;
+  }
+
+  /*Returns the player's current score.*/
+  
+  method int getScore(){
+    return score;
+  }
+
+  /*Returns the X-coordinate of the player's current position*/
+  
+  method int getXLocation(){
+    return x;
+  }
+
+  /*Returns the Y-coordinate of the player's current position*/
+  
+  method int getYLocation(){
+    return y;
+  }
+
+}
