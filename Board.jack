@@ -1,0 +1,62 @@
+/** A board class which the game take place on */
+class Board {
+	field int xcordinate, ycordinate ;                         // screen location of the board's top-left corner
+	
+	// A default constructor which receives the coordinators 
+	constructor Board new(int x,int y)
+	{
+		let xcordinate=x;                                      // initialzing screen location of x cordinate as x
+		let ycordinate=y;                                      // initialzing screen location as y cordinate as y
+		do build();                                            // drawa the board and its calling the method
+		do fill_numbers();                                     // it the location of number we enter
+		return this;                                           // return all these
+	}
+	// This function draws the board .
+	method void build()
+	{               
+         // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+	
+		do Screen.drawLine(xcordinate,ycordinate,xcordinate+288,ycordinate);           // draws a horizontal line and if we consider a square it draws a top horizontal line
+		do Screen.drawLine(xcordinate,ycordinate,xcordinate,ycordinate+120);           // draws a vertical line and if we consider a square it draws a left vertical line
+		do Screen.drawLine(xcordinate+288,ycordinate,xcordinate+288,ycordinate+120);   // draws a vertical line and if we consider a square it draws a right vertical line
+		do Screen.drawLine(xcordinate,ycordinate+120,xcordinate+288,ycordinate+120);   // draws a horizontal line and if we consider a square it draws a bottom horizontal line
+		do Screen.drawLine(xcordinate+96,ycordinate,xcordinate+96,ycordinate+120);     // draw a horizontal line parrallel to top vertical line say with distance of 96 from top vertical line
+		do Screen.drawLine(xcordinate+192,ycordinate,xcordinate+192,ycordinate+120);   // draw a horizontal line parrallel to top vertical line say with distance of 96 from next vertical line
+		do Screen.drawLine(xcordinate,ycordinate+40,xcordinate+288,ycordinate+40);     // draw a vertical line parrallel to left vertical line with dist 40 from top and bottom horizontal line
+		do Screen.drawLine(xcordinate,ycordinate+80,xcordinate+288,ycordinate+80);     // draw a vertical line parrallel to left vertical line with dist 80 from top and bottom horizontal line
+		return;
+	}
+	// This function writes the numbers into the board .
+	method void fill_numbers()
+	{
+	   // .moveCursor is inbuilt function to move cursor in coordinates we wish
+	
+		do Output.moveCursor(13,22);             // movers the cursor to the given location                             
+		do Output.printInt(1);                   // prints the given integer
+		do Output.moveCursor(13,34);             // movers the cursor to the given location    
+		do Output.printInt(2);                   // prints the given integer
+		do Output.moveCursor(13,45);             // movers the cursor to the given location    
+		do Output.printInt(3);                   // prints the given integer
+		
+		do Output.moveCursor(17,22);             // movers the cursor to the given location    
+		do Output.printInt(4);                   // prints the given integer
+		do Output.moveCursor(17,34);             // movers the cursor to the given location    
+		do Output.printInt(5);                   // prints the given integer
+		do Output.moveCursor(17,45);             // movers the cursor to the given location    
+		do Output.printInt(6);                   // prints the given integer
+		
+		do Output.moveCursor(20,22);             // movers the cursor to the given location    
+		do Output.printInt(7);                   // prints the given integer
+		do Output.moveCursor(20,34);             // movers the cursor to the given location    
+		do Output.printInt(8);                   // prints the given integer
+		do Output.moveCursor(20,45);             // movers the cursor to the given location    
+		do Output.printInt(9);                   // prints the given integer
+		return; 
+	}
+	// A dispose function 
+	method void dispose()
+	{
+		do Memory.deAlloc(this);                // jack dont hav garbage collector so we hav to dispose manually
+		return ;
+	}
+}	
