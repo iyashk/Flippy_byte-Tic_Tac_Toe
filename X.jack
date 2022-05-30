@@ -1,0 +1,76 @@
+/** A X class */
+class X {
+
+	// This function draws the x at the given coordinators .
+	function void draw_x(int xcor,int ycor)
+	{
+		do Screen.drawLine(xcor+20,ycor+10,xcor+74,ycor+30);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+		do Screen.drawLine(xcor+76,ycor+10,xcor+20,ycor+30);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+		do Screen.drawLine(xcor+20,ycor+12,xcor+74,ycor+32);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+		do Screen.drawLine(xcor+76,ycor+12,xcor+20,ycor+32);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+		do Screen.drawLine(xcor+20,ycor+11,xcor+74,ycor+31);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+		do Screen.drawLine(xcor+76,ycor+11,xcor+20,ycor+31);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+
+		return;
+	}
+	
+	// This function receives from the user where to play and calls the draw_x function .
+	function void draw(int num)
+	{
+		if(num = 1)                                                  // if we select the number 1
+		{
+			do Output.moveCursor(13,22);                             // in order to remove the number 1.
+			do Output.moveCursor(6,0);                               // movers the cursor to the given location
+			do X.draw_x(128,128);                                    // calling the function which draws x at given location 
+		}
+		if(num = 2)
+		{
+			do Output.moveCursor(13,34);                             // in order to remove the number 2.
+			do Output.moveCursor(6,0);                               // movers the cursor to the given location
+			do X.draw_x(224,128);                                    // calling the function which draws x at given location 
+		}
+		if(num = 3)
+		{
+			do Output.moveCursor(13,45);                            // in order to remove the number 3.
+			do Output.moveCursor(6,0);                              // movers the cursor to the given location
+			do X.draw_x(320,128);                                   // calling the function which draws x at given location 
+		} 
+		if(num = 4)
+		{
+			do Output.moveCursor(17,22);                            // in order to remove the number 4.
+			do Output.moveCursor(6,0);                              // movers the cursor to the given location
+			do X.draw_x(128,168);                                   // calling the function which draws x at given location 
+		}
+		if(num = 5)
+		{
+			do Output.moveCursor(17,34);                            // in order to remove the number 5.
+			do Output.moveCursor(6,0);                              // movers the cursor to the given location
+			do X.draw_x(224,168);                                   // calling the function which draws x at given location 
+		}
+		if(num = 6)
+		{
+			do Output.moveCursor(17,45);                             // in order to remove the number 6.
+			do Output.moveCursor(6,0);                               // movers the cursor to the given location
+			do X.draw_x(320,168);                                    // calling the function which draws x at given location 
+		}
+		if(num = 7)
+		{
+			do Output.moveCursor(20,22);                             // in order to remove the number 7.
+			do Output.moveCursor(6,0);                               // movers the cursor to the given location
+			do X.draw_x(128,208);                                    // calling the function which draws x at given location 
+		}
+		if(num = 8)
+		{
+			do Output.moveCursor(20,34);                             // in order to remove the number 8.
+			do Output.moveCursor(6,0);                               // movers the cursor to the given location
+			do X.draw_x(224,208);                                    // calling the function which draws x at given location 
+		}
+		if(num = 9)
+		{
+			do Output.moveCursor(20,45);                              // in order to remove the number 9.
+			do Output.moveCursor(6,0);                                // movers the cursor to the given location
+			do X.draw_x(320,208);                                     // calling the function which draws x at given location 
+		}
+		return;
+	}
+}
