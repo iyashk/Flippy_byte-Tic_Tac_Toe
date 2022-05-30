@@ -1,0 +1,284 @@
+
+class Main{
+
+	/*Starts up the splash screen and prepares a new instance of the game.*/
+	function void main(){
+	var int a;
+	var Game g;
+		var int counter;
+		var Board board;
+		var Array arr;
+		var boolean flag;
+		var int n;
+		var int i;
+		var char currKey;
+
+		do Main.face();
+		let a=Keyboard.readInt("enter 1 for game 1, enter 2 for game 2, enter 3 to exit "); 
+	if(a=1)
+	{	do Screen.clearScreen();
+		do Main.splashScreen();                                          // calling the method which we declared at main.jack                             
+		let g = Game.new();                                              // starting the game which was declared in game.jack
+		do g.start();                                                    // calling method from game.jack
+		do Main.main();                                                 
+		return;
+	}
+	
+    if(a=3){
+        do Output.moveCursor(4,20);
+        do Output.printString("EXIT!!");
+        do Screen.clearScreen();
+		return;
+    
+    }
+	else
+	{
+
+		do Screen.clearScreen();
+		let board=Board.new(128,128);                              // method to display board which we declared in board.jack
+		let arr=Array.new(10);                                     // creating an array of size 10
+		let flag = true;                                           // jst assuming flag be true
+		let counter=0;
+		do Main.article();                                          // calling the method from main.jack to display msg like welcome
+		
+		while (flag)
+		{
+			let n = Keyboard.readInt("Player 1,choose a number between 1-9: ");  // asking the player 1 to enter a number between 1 and 9
+			let i = 0 ;
+			while (i < 50)                                         // can be any number less than 11
+			{
+				do Output.moveCursor(6,i);                               // moves the cursor to the given location
+				let i = i+1 ;                                            // increment i by 1
+			}
+			do Output.moveCursor(6,0);                                         // moves the cursor to the given location which is at top corner
+			
+			while ((arr[n] = 1) | (arr[n] = -1) | (n < 1) | (n > 9))        // if any of these is selected 
+			{
+				let n = Keyboard.readInt("Player 1,Please select legal number: ");     // display this
+				let i = 0 ;
+				while (i < 60)
+				{	
+					do Output.moveCursor(6,i);                           // moves the cursor to the given location
+					let i = i+1 ;
+				}
+				do Output.moveCursor(6,0);                                // moves the cursor to the given location which is at top corner
+			}
+			let arr[n]=1;
+			let counter = counter + 1 ;                                   // incrementing counter
+			do X.draw(n);                                                 // calling function from X.jack
+			if (Main.Checkwinner(arr,1)=false)                            // method declared in main.jack
+			{
+				do Output.printString("Player 1 won!");// display this 
+				
+				let flag = false;                                          // initialize flag with false
+				
+			}
+			if ((counter = 9) & (flag))                                    // the max steps can be played is 9
+			{
+				do Output.printString("Oops! There is no winner");
+				
+				
+				do arr.dispose();                                           // its method to dispose as jack has no garbage collector
+				do board.dispose(); 				// calling method from board.jack
+				 
+				return;
+			}
+			if (flag) // flag is true
+			{
+				let n = Keyboard.readInt("Player 2,choose a number between 1-9: ");  // asking the player 2 to enter a number between 1 and 9
+				let i = 0 ;
+				while (i < 50)
+				{
+					do Output.moveCursor(6,i);                                  // moves the cursor to the given location
+					let i = i+1 ;                                              // increment i by 1
+				}
+				do Output.moveCursor(6,0);                                     // movers the cursor to the given location which is at top corner
+				while ((arr[n] = 1) | (arr[n] = -1) | (n < 1) | (n > 9))         // if any of these is selected 
+				{
+				
+					let n = Keyboard.readInt("Player 2,Please select legal number: ");      // display this
+					let i = 0 ;
+					while (i < 60)                                       // moves the cursor to the given location
+					{
+						do Output.moveCursor(6,i);                                   
+						let i = i+1 ;
+					}
+					do Output.moveCursor(6,0);                             // moves the cursor to the given location which is at top corner
+				}
+				let arr[n] = -1;
+				let counter = counter + 1;                               // incrementing counter
+				do O.draw(n);                                            // calling a method from o.jack
+				if (Main.Checkwinner(arr,-1) = false)                    // method we declared in main.jack
+				{
+					do Output.printString("Player 2 won!");// display this string 
+					let flag = false;
+				
+				}
+			}	
+		}
+		do Sys.wait(2000);
+        do Screen.clearScreen();
+        do Main.main();
+		do arr.dispose();                                                  // its method to dispose as jack has no garbage collector
+		do board.dispose();// calling method from board.jack
+		
+        
+		return;
+	}
+		
+	}
+	
+		
+	
+
+	/*Main menu splash screen. Returns after the player presses space*/
+	function void face(){
+		var int a;
+	var int xcordinate, ycordinate ;   
+		 
+		let xcordinate=400;                                    
+		let ycordinate=70;            //max 255                        
+			do Screen.drawLine(228,30,228,224);     
+			do Screen.drawLine(270+40,70,270+40,70+120); 
+			do Screen.drawLine(270+80,70,270+80,70+120);  
+			do Screen.drawLine(270,70+40,270+120,70+40);    
+			do Screen.drawLine(270,70+80,270+120,70+80);
+			do Screen.drawCircle(270+20,70+20,15);           // draws the circle with given parameters ie (x cord,y cord , radius)
+			do Screen.setColor(false);                  
+			do Screen.drawCircle(270+20,70+20,12);
+			do Screen.setColor(true);			
+			do Screen.drawCircle(270+60,70+60,15);           // draws the circle with given parameters ie (x cord,y cord , radius)
+			do Screen.setColor(false);                  
+			do Screen.drawCircle(270+60,70+60,12);
+			do Screen.setColor(true);
+			do Screen.drawCircle(270+100,70+100,15);           // draws the circle with given parameters ie (x cord,y cord , radius)
+			do Screen.setColor(false);                  
+			do Screen.drawCircle(270+100,70+100,12);
+			do Screen.setColor(true); 
+			do Screen.drawLine(270,70,270+120,70+120);
+			do Output.moveCursor(3,40);                                 // moves the cursor to given location
+			do Output.printString("Tic Tac Toe");
+			
+			do Screen.drawLine(xcordinate+30,ycordinate+10,xcordinate+66,ycordinate+30);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+			do Screen.drawLine(xcordinate+66,ycordinate+10,xcordinate+30,ycordinate+30);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+			do Screen.drawLine(xcordinate+30,ycordinate+12,xcordinate+66,ycordinate+32);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+			do Screen.drawLine(xcordinate+66,ycordinate+12,xcordinate+30,ycordinate+32);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+			do Screen.drawLine(xcordinate+30,ycordinate+11,xcordinate+66,ycordinate+31);      // the inbuilt function draw line draws a line between two points say between (x1,y1) and (x2,y2) if drawline(x1,y1,x2,y2) is given 
+			do Screen.drawLine(xcordinate+66,ycordinate+11,xcordinate+30,ycordinate+31);
+			
+			do Screen.drawCircle(xcordinate+20+27,70+80,18);           // draws the circle with given parameters ie (x cord,y cord , radius)
+			do Screen.setColor(false);                  
+			do Screen.drawCircle(xcordinate+20+27,70+80,15);
+			do Screen.setColor(true);
+			
+			do Output.moveCursor(20,10);                                 // moves the cursor to given location
+			do Output.printString("Game 1");
+			do Output.moveCursor(20,40);                                 // moves the cursor to given location
+			do Output.printString("Game 2");
+			
+			do Screen.drawRectangle(176,60,186,110);            // draw the upper wall of screen
+			do Screen.drawRectangle(176,160,186,204);
+			do Screen.drawRectangle(156,60,166,100);            // draw the upper wall of screen
+			do Screen.drawRectangle(156,150,166,204);
+			do Screen.drawRectangle(136,60,146,105);            // draw the upper wall of screen
+			do Screen.drawRectangle(136,155,146,204);
+			do Screen.drawRectangle(116,60,126,115);            // draw the upper wall of screen
+			do Screen.drawRectangle(116,165,126,204);
+			do Screen.drawRectangle(96,60,106,127);            // draw the upper wall of screen
+			do Screen.drawRectangle(96,177,106,204);
+			do Screen.drawRectangle(76,60,86,117);            // draw the upper wall of screen
+			do Screen.drawRectangle(76,167,86,204);
+			do Screen.drawRectangle(56,60,66,107);            // draw the upper wall of screen
+			do Screen.drawRectangle(56,157,66,204);
+			do Screen.drawRectangle(56,60,66,104);            // draw the upper wall of screen
+			do Screen.drawRectangle(56,160,66,204);
+			do Screen.drawRectangle(36,60,46,112);            // draw the upper wall of screen
+			do Screen.drawRectangle(36,162,46,204);
+			do Output.moveCursor(3,10);                                 // moves the cursor to given location
+			do Output.printString("Flippy Bite");
+			do Screen.drawRectangle(36,130,46,140);            // draw the upper wall of screen
+			
+			do Output.moveCursor(1,4); 
+		
+		return ;
+		
+	}
+	function void splashScreen()
+	{
+		var char currKey;
+		let currKey = 0;
+
+		do Output.moveCursor(5,26);                                 // moves the cursor to given location
+		do Output.printString("Flippy Byte");                       // displays this string
+		do Output.moveCursor(8,22);                                 // moves the cursor to given location
+		do Output.printString("Press Space to Start");               // displays this string
+		do Output.moveCursor(9,22);                                 // moves the cursor to given location
+		do Output.printString("Press Up Key to Fly");                 // displays this string
+
+		//32 = ASCII_SPACE
+		while(~(currKey = 32)){
+			let currKey = Keyboard.keyPressed();
+		}
+
+		return;
+	}
+	
+
+	// This function checks if there is a winner or not . 
+	// The function returns false if there is a winner , true otherwise.
+	function boolean Checkwinner(Array arr, int i)
+	{
+			if ((arr[1] = i) & (arr[2] = i) & (arr[3] = i))        // if the frst line is equal ie same player has choosen all the 3 places in frst horizontal line
+			{
+				do Screen.drawLine(128,128+20,128+288,128+20);    // draw a line across it      
+				return false;                                      // returns false
+			}
+			if ((arr[4] = i) & (arr[5] = i) & (arr[6] = i))        // if the second line is equal ie same player has choosen all the 3 places in second horizontal line
+			{
+				do Screen.drawLine(128,128+60,128+288,128+60);     // draw a line across it  
+				return false;                                     
+			}
+			if ((arr[7] = i) & (arr[8] = i) & (arr[9] = i))         // if the third line is equal ie same player has choosen all the 3 places in third horizontal line
+			{
+				do Screen.drawLine(128,128+100,128+288,128+100);    // draw a line across it  
+				return false;
+			}
+			if ((arr[1] = i) & (arr[4] = i) & (arr[7] = i))         // if the frst line is equal ie same player has choosen all the 3 places in frst vertical line
+			{
+				do Screen.drawLine(128+48,128,128+48,128+120);      // draw a line across it 
+				return false;
+			}
+			if ((arr[2] = i) & (arr[5] = i) & (arr[8] = i))         // if the second line is equal ie same player has choosen all the 3 places in second vertical line
+			{
+				do Screen.drawLine(128+144,128,128+144,128+120);       // draw a line across it 
+				return false;
+			}
+			if ((arr[3] = i) & (arr[6] = i) & (arr[9] = i))         // if the third line is equal ie same player has choosen all the 3 places in third vertical line
+			{
+				do Screen.drawLine(128+240,128,128+240,128+120);       // draw a line across it 
+				return false;
+			}
+			if ((arr[1] = i) & (arr[5] = i) & (arr[9] = i))          // if the same player select cross wise from top left to bottom right
+			{
+				do Screen.drawLine(128,128,128+288,128+120);           // draw a line across it 
+				return false;
+			}
+			if ((arr[3] = i) & (arr[5] = i) & (arr[7] = i))            // if the same player select cross wise from top right to bottom left
+			{
+				do Screen.drawLine(128,128+120,128+288,128);           // draw a line across it 
+				return false; 
+			}
+			return true;
+			
+	}
+	// This function writes the article on the screen .
+	function void article()
+	{
+		do Output.moveCursor(1,22);                            // moves the cursor to given location
+		do Output.printString("Welcome To Tic Tac Toe !");      // displays the string
+		do Output.moveCursor(6,0);                              // moves the cursor to given location
+		return;
+	}	
+	
+
+}
