@@ -1,0 +1,105 @@
+class Wall{
+  field int x1, x2, y1Top, y2Top, y1Bottom, y2Bottom, heightSeed;
+  field boolean clearancePlacement;
+
+  /**Walls are always 20px wide and the height is determined by a
+  * Pseudo-Pseudo-PRNG */
+  
+  constructor Wall new(int x){
+    //do setSeed(seed);
+
+    let x1 = x;                             // assuming frst wall is at location x
+    let x2 = x + 20;                       // the next wall we are maintaining a distance of 20 px
+
+    let clearancePlacement = false;
+    let y1Top = 0;                         // initially assuming y1top equal to zero which is top of the screen
+    let y2Top = 10;                        // initially assuming y2top equal to 10 which is length of wall
+	 
+    let y1Bottom = 254;                    // initially assuming y1bottom equal to 254 which is length of bottom wall initially
+    let y2Bottom = 255;                    // initially assuming y1bottom equal to 255 which is bottom most screen
+
+    return this;
+  }
+
+  method boolean readyNewWall(){
+   
+    if(x1 < 392){                      // screen location right most wall is 392 
+      return true;                     // using this because to get new wall
+    }else{
+      return false;
+    }
+  }
+
+  method boolean isColliding(int x, int y){
+    if(((x+15) > x1) & ((x+15) < x2)){                      // adding 15 extra because initially we declared length of player (rectangle) as 15
+      if(((y-15) < y2Top) | ((y+15) > y1Bottom)){           // if this condition satisfy then player is colliding with wall
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /*Moves the wall to the left by 5px.
+  *
+  * If the wall is close to the left border of the screen,
+  * it is reset to the beginning and assigned a new height
+  * and gap.*/
+  
+  
+  method void moveWall(){
+    if(x1 > 19){
+      let x1 = x1 - 5;                            // responsible for moment of wall on top 
+      let x2 = x2 - 5;                            // responsible for moment of wall on bottom
+    }else{
+      do setSeed(Game.getSteps());               // calling method of set seed , getsteps method in game.jack
+      do newWallHeight();                        // calling method which gives new wall
+      
+      let x1 = 491;
+      let x2 = 511;
+    }
+
+    do drawWall();                              // draws the wall on screen
+    return;
+  }
+
+  //Draw the wall on the screen
+  method void drawWall(){
+    do Screen.drawRectangle(x1,y1Top,x2,y2Top);            // draw the upper wall of screen
+    do Screen.drawRectangle(x1,y1Bottom,x2,y2Bottom);      // draw thhe lower wall of screen
+
+    return;
+  }
+
+  /*Computes a seed used to determine the configuration of the wall.
+  * A not-so-great attempt at pseudo-pseudo-pseudo-randomness (There's definitely
+  * a pattern here). */
+  
+  method void setSeed(int seed){
+    let heightSeed = (heightSeed/2 + seed*2 + 5)/4;    // just a random calculation to assign the length of new wall
+    while(heightSeed > 120){                              // if the wall is extending location 120 which is nearly half
+      let heightSeed = heightSeed - 10;               // decrease by 10 because it wil be difficult for player
+    } 
+
+    return;
+  }
+
+
+  //Assign the wall a new height
+  method void newWallHeight(){
+    let y1Top = 0;
+    let y2Bottom = 255;
+
+    if(clearancePlacement){
+      let y2Top = y2Top - heightSeed + 20;         // just a random height generated on top wall
+      let y1Bottom = 205 - heightSeed;             // random height of wall generated on bottom of wall
+      let clearancePlacement = false;
+    }else{
+      let y2Top = 50 + heightSeed;                 // just a random height generated on top wall
+      let y1Bottom = y1Bottom - heightSeed;         // random height of wall generated on bottom of wall
+      let clearancePlacement = true;
+    }
+
+    return;
+  }
+}
