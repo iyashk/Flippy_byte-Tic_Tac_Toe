@@ -1,0 +1,122 @@
+class Game{
+field char UP_KEY, currKey;                              // the keys comes under charecter set
+field boolean start, lastWallReady, isColliding;         // initializing start, lastWallReady, isColliding to boolean
+field int wallIndex, numWalls, i, playerX, playerY;      // initializing wallIndex, numWalls, i, playerX, playerY to type int 
+
+field Wall w;                                            // field variables are object properties, can be manipulated by the  class constructors and methods
+field Array walls;
+field Player player;
+
+static int seedling;
+
+  /*Sets up necessary fields for the game, as well as the player object.*/
+  
+  constructor Game new(){
+  
+    let UP_KEY = 131;                                  // in the character set up arrow is represented as 131
+
+    let start = false;                                 // initializing start with false because when key presses it changes to true and then starts
+    let numWalls = 5;                                  //  initially let num of wall be 5
+    let wallIndex = 0;
+    let walls = Array.new(numWalls);                  // crating a new array of walls 
+    let walls[0] = Wall.new(491);                     // 491 is location which we assumed in wall.jack
+    let seedling = 10;                                // initially let number of steps be 10
+
+    let currKey = 0;
+
+    let player = Player.new(50,100);                 // let the starting location of player(rectangle) be at this point
+
+    return this;
+  }
+
+  /*Starts the main game loop. Continues until the player collides with a wall.*/
+  
+  
+  method void start(){
+    while(true){
+                                                          /**Check if up key was pressed, and if so, move the player**/
+      let currKey = Keyboard.keyPressed();
+      
+	  if(currKey = UP_KEY){                        // if we press upkey the game starts
+	  
+        do player.movePlayer(5);                   // when we press it moves 5 px upwards
+      }else{
+        do player.movePlayer(-7);                  // else it moves 7 locations downwards
+      }
+
+      if(wallIndex < (numWalls - 1)){
+        let w = walls[wallIndex];                   //  walls array 
+        let lastWallReady = w.readyNewWall();        // this is amethod in wall.jack to check to get newwall or not
+        if(lastWallReady){
+          let wallIndex = wallIndex + 1;           // incrementing wallindex by 1
+          let walls[wallIndex] = Wall.new(491);    // wall is cretaed at location 491 which we assumed at wall.jack
+          let w = walls[wallIndex];                // reassigning the locations of wall
+          do w.setSeed(seedling);                  // method from wall.jack to generate a new wall height
+          do w.newWallHeight();                    // method from wall.jack to implement a new wall height
+        }
+      }
+
+      /*Move walls and check for collitions*/
+      
+      let playerX = player.getXLocation();        // gives the location of x called from player.jack
+      let playerY = player.getYLocation();         // gives the location of y called from player.jack
+      let i = 0;
+      while(i < (wallIndex + 1)){
+        let w = walls[i];
+        do w.moveWall();                          // moves the wall and creates a new wall called from wall.jack
+
+        let isColliding = w.isColliding(playerX, playerY);   // method call from wall.jack to know whether wall is colliding
+        if(isColliding){
+          do failScreen();                         // method calling to clean screen 
+          return;
+        }
+
+        /*If no collision was detected, award the player some points and continue.*/
+        do player.incrementScore(2);              // incrementing score by 2
+        let i = i + 1;
+      }
+
+      /**Update the seed**/
+      
+      if(seedling < 40){                       // if steps less than 40
+        let seedling = seedling + 1;           // increment by 1
+      }else {
+        let seedling = 1;                    // or assign as 1 and then the same process follows
+      }
+
+      //The player is drawn last because the score needs to written over any other objects on the screen
+      do player.drawPlayer();
+
+      do Sys.wait(50);                     // wait for 50ms
+      do Screen.clearScreen();
+    }
+
+    return;
+  }
+
+  /*Displayed when the player collides with a wall, along with a score.*/
+  method void failScreen(){
+    do Screen.clearScreen();                // mrthod to clear the screen
+    do Output.moveCursor(10,20);            // moves the cursor to given location
+    do Output.printString("You lost! Your score is:");          // displays this string
+    do Output.moveCursor(11,30);              // moves the cursor to given location
+    do Output.printInt(player.getScore());     // displays the score called from player.jack
+
+    //Give the player some time to read the message
+    do Sys.wait(2000);
+
+    do Screen.clearScreen();
+    return;
+  }
+
+  /*Returns the number of steps taken in the game. Used in Wall.jack to generate
+  * a not-so-random number */
+  function int getSteps(){
+    return seedling;
+  }
+
+}
+
+
+// x cordinate 0 to 511
+// y px from 0 to 256
