@@ -4,8 +4,8 @@
 
 ## File Hirearchy :
 In this repo we have a folder named "vm" which has all the jack files :
-    - Board.jack
-    - Game.jack
+    1. Board.jack
+    2. Game.jack
     - Main.jack
     - O.jack
     - Player.jack
